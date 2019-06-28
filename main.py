@@ -37,11 +37,28 @@ def first_filter_of_data(csv):
     return first_data_types
 
 
-def second_filter_of_data(csv):
-    second_data_types = csv.dtypes.tolist()
+def second_filter_of_data(headers, data_types):
+    second_data_types = []
+
+    for type in data_types:
+        if type == "object":
+            second_data_types.append("string")
+        elif type == "int64":
+            second_data_types.append("integer")
+        elif type == "float64":
+            second_data_types.append("float")
+        elif type == "bool":
+            second_data_types.append("bool")
+        elif type == "datetime64":
+            second_data_types.append("datetime")
+        elif type == "timedelta[ns]":
+            second_data_types.append("timedelta")
+        elif type == "category":
+            second_data_types.append("category")
+        else:
+            second_data_types.append("somethingWrong")
 
     return second_data_types
-
 
 
 def print_data(headers, filter):
@@ -72,21 +89,17 @@ if __name__ == "__main__":
     #print(type(first_data_types[0]))
 
 
+
     print("")
     print("Here we have the first filter of data:")
     print_data(list_of_headers, first_data_types)
-
     print("First filter list: ", first_data_types)
 
-    """
-    second_filter = second_filter_of_data(csv)
+    second_filter = second_filter_of_data(list_of_headers, first_data_types)
     print("")
     print("Here we have the second filter of data:")
     print_data(list_of_headers, second_filter)
-    """
+    print("Second filter list: ", second_filter)
 
-
+    #Now we have all data types according to pandas criteria, now we need to check all data for each column to verify it
     print(" ")
-    # print(csv['Genres'])
-
-
